@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ParamDTO implements Serializable {
 
@@ -18,7 +19,7 @@ public class ParamDTO implements Serializable {
     private String sourcePorts;
     private String destinationPorts;
     private String action;
-    private List<SubparamDTO> subparams;
+    private List<Map<String, String>> subparams;
 
 
 
@@ -86,17 +87,17 @@ public class ParamDTO implements Serializable {
         this.action = action;
     }
 
-    public List<SubparamDTO> getSubparams() {
+    public List<Map<String, String>> getSubparams() {
         return subparams;
     }
 
-    public void setSubparams(List<SubparamDTO> subparams) {
+    public void setSubparams(List<Map<String, String>> subparams) {
         this.subparams = subparams;
     }
 
     public void setSubparams(String subparamsJson) {
         if(subparamsJson != null && !subparamsJson.isEmpty()) {
-            ArrayList<SubparamDTO> subparams = new Gson().fromJson(subparamsJson, ArrayList.class);
+            ArrayList<Map<String, String>> subparams = new Gson().fromJson(subparamsJson, ArrayList.class);
             this.subparams = subparams;
         }
     }

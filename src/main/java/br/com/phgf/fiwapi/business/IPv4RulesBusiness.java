@@ -1,13 +1,13 @@
 package br.com.phgf.fiwapi.business;
 
 import br.com.phgf.fiwapi.dto.ParamDTO;
-import br.com.phgf.fiwapi.dto.SubparamDTO;
 import br.com.phgf.fiwapi.enumeration.EnumTable;
 import br.com.phgf.fiwapi.system.FiwapiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 @Service
 public class IPv4RulesBusiness {
@@ -67,8 +67,6 @@ public class IPv4RulesBusiness {
         if(param.getAction() == null) {
             throw new FiwapiException("The parameter \"action\" is required");
         }
-        command.add("-j");
-        command.add(param.getAction());
 
         if(param.getInInterface() != null) {
             command.add("-i");
@@ -109,20 +107,32 @@ public class IPv4RulesBusiness {
             command.add(param.getDestinationPorts());
         }
 
+        command.add("-j");
+        command.add(param.getAction());
+
         if(param.getSubparams() != null && !param.getSubparams().isEmpty()) {
-            for(SubparamDTO subparam : param.getSubparams()) {
-                command.add(subparam.getName());
-                command.add(subparam.getValue());
+            for(Map<String, String> subparam : param.getSubparams()) {
+                command.add(subparam.get("name"));
+                command.add(subparam.get("value"));
             }
         }
 
         String[] commandArray = new String[command.size()];
         commandArray = command.toArray(commandArray);
+        printCommand(commandArray);
 
         String response = osBusiness.sendCommand(5, commandArray);
         if(!"OK".equals(response)) {
             throw new FiwapiException(response);
         }
+    }
+
+    private void printCommand(String[] command) {
+        StringBuilder result = new StringBuilder();
+        for(String c : command) {
+            result.append(c).append(" ");
+        }
+        System.out.println("Command: " + result.toString());
     }
 
 }

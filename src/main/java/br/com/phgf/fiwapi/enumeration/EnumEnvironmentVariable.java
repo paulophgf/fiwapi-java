@@ -6,7 +6,8 @@ public enum EnumEnvironmentVariable {
     FIWAPI_PASSWORD(true, null),
     APP_FIWAPI_NAME(false, "fiwapi"),
     APP_FIWAPI_PORT(false, "8891"),
-    WIFEED_DISCOVERY_URL(false, "http://localhost:8761/eureka/");
+    SERVICE_DISCOVERY_URL(false, "http://localhost:8761/eureka/"),
+    ENABLE_SERVICE_DISCOVERY(false, "false");
 
     private boolean required;
     private String defaultValue;

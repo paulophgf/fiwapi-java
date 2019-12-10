@@ -29,6 +29,7 @@ public class SystemInicialization {
         System.out.println("Current Date: " + new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date()));
         System.out.println("Running on port: " + EnumEnvironmentVariable.APP_FIWAPI_PORT.getValue());
         System.out.println("Version: " + App.VERSION.get());
+        System.out.println("Service Enabled: " + EnumEnvironmentVariable.ENABLE_SERVICE_DISCOVERY.getValue());
     }
 
 }

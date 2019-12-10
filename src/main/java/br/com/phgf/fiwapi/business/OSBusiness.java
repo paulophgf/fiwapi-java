@@ -17,20 +17,26 @@ public class OSBusiness {
     }
 
     public String sendCommand(boolean waitToResponse, long timeout, String... command) {
-        StringBuilder content = null;
+        String result = null;
         try {
             ProcessBuilder ps = new ProcessBuilder(command);
             ps.redirectErrorStream(true);
             Process pr = ps.start();
             if(waitToResponse) {
                 try (InputStream inputStream = pr.getInputStream(); InputStreamReader isr = new InputStreamReader(inputStream); BufferedReader in = new BufferedReader(isr)) {
+                    StringBuilder content = new StringBuilder();
+
                     String line;
                     while ((line = in.readLine()) != null) {
-                        content.append(line);
+                        if(line != null) {
+                            content.append(line);
+                        }
                     }
                     pr.waitFor(timeout, TimeUnit.SECONDS);
-                    if (content == null) {
-                        content.append("OK");
+
+                    result = content.toString();
+                    if (result == null || result.isEmpty()) {
+                        result = "OK";
                     }
                 }
             }
@@ -39,7 +45,7 @@ public class OSBusiness {
             throw new FiwapiException("Error to execute OS command");
         }
 
-        return content.toString();
+        return result;
     }
 
 }

@@ -48,7 +48,7 @@ public class IPv4RulesController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/{table}/{chain}/input/{position}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{table}/{chain}/{position}", method = RequestMethod.POST)
     public String addInput(@PathVariable("table") String tableName, @PathVariable("chain") String chain, @PathVariable("position") Integer position, @RequestBody ParamDTO param) {
         EnumTable table = EnumTable.get(tableName);
         iPv4RulesBusiness.addRule(table, chain, param, false, position);
@@ -56,7 +56,7 @@ public class IPv4RulesController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/{table}/{chain}/check", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{table}/{chain}", method = RequestMethod.DELETE)
     public String delete(@PathVariable("table") String tableName, @PathVariable("chain") String chain,
                         @RequestParam("inInterface") String inInterface, @RequestParam("outInterface") String outInterface,
                         @RequestParam("protocol") String protocol, @RequestParam("source") String source,

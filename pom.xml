@@ -13,7 +13,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <start-class>br.com.phgf.App</start-class>
+        <start-class>br.com.phgf.fiwapi.App</start-class>
         <java.version>1.8</java.version>
     </properties>
 
@@ -69,7 +69,7 @@
                 <version>1.4.1.RELEASE</version>
 
                 <configuration>
-                    <mainClass>br.com.phgf.App</mainClass>
+                    <mainClass>br.com.phgf.fiwapi.App</mainClass>
                     <layout>JAR</layout>
                 </configuration>
 
