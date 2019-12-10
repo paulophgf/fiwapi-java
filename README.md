@@ -17,6 +17,7 @@ GET HTTP request, instead it was used the POST method.
 - FIWAPI_SERVICE_NAME: Service name (Required: false, Default Value: fiwapi)
 - SERVICE_DISCOVERY_URL: address where the service discovery is running (Required: false, Default: http://localhost:8761/eureka/)
 - ENABLE_SERVICE_DISCOVERY: Flag to enable or disable the service discovery (Required: false, Default Value: false)
+- IP_INSTANCE: Address where the Fiwapi is running. This address will be used to others services
 
 ## Endpoints
 
