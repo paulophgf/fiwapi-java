@@ -1,9 +1,6 @@
 package br.com.phgf.fiwapi.dto;
 
-import com.google.gson.Gson;
-
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -93,13 +90,6 @@ public class ParamDTO implements Serializable {
 
     public void setSubparams(List<Map<String, String>> subparams) {
         this.subparams = subparams;
-    }
-
-    public void setSubparams(String subparamsJson) {
-        if(subparamsJson != null && !subparamsJson.isEmpty()) {
-            ArrayList<Map<String, String>> subparams = new Gson().fromJson(subparamsJson, ArrayList.class);
-            this.subparams = subparams;
-        }
     }
 
 }

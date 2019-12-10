@@ -4,8 +4,8 @@ public enum EnumEnvironmentVariable {
 
     FIWAPI_USER(true, null),
     FIWAPI_PASSWORD(true, null),
-    APP_FIWAPI_NAME(false, "fiwapi"),
-    APP_FIWAPI_PORT(false, "8891"),
+    FIWAPI_PORT(false, "8891"),
+    FIWAPI_SERVICE_NAME(false, "fiwapi"),
     SERVICE_DISCOVERY_URL(false, "http://localhost:8761/eureka/"),
     ENABLE_SERVICE_DISCOVERY(false, "false");
 

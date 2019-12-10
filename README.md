@@ -1,13 +1,20 @@
 # FIWAPI
 
-## Description
 A Simple API to manipulate IPTABLES rules.
+
+**MICROSERVICES:** It is possible use this API as a Microservice with a Eureka Service Discovery, to do that you just need to enable
+the Service Discovery informing the value "true" to the ENABLE_SERVICE_DISCOVERY variable and what is the Service 
+Discovery URL using the SERVICE_DISCOVERY_URL variable.
+
+**NOTE:** The HTTP request methods, used in this projects, don't follow the HTTP specification. It was used the better way to
+send the firewall rules informations. It would be quite complicated send the parameters throw the path on the 
+GET HTTP request, instead it was used the POST method.
 
 ## Environment Variables
 - FIWAPI_USER: User to access the API (Required: true),
 - FIWAPI_PASSWORD: Password to access the API (Required: true)
-- APP_FIWAPI_NAME: Service name (Required: false, Default Value: fiwapi)
-- APP_FIWAPI_PORT: Service port (Required: false, Default Value: 8891)
+- FIWAPI_PORT: Service port (Required: false, Default Value: 8891)
+- FIWAPI_SERVICE_NAME: Service name (Required: false, Default Value: fiwapi)
 - SERVICE_DISCOVERY_URL: address where the service discovery is running (Required: false, Default: http://localhost:8761/eureka/)
 - ENABLE_SERVICE_DISCOVERY: Flag to enable or disable the service discovery (Required: false, Default Value: false)
 
@@ -30,18 +37,8 @@ A Simple API to manipulate IPTABLES rules.
 - **action:** This specifies the target of the rule
 - **subparams:** A list of parameters used on some actions
 
-#### Path: /api/v4/{table}/{chain}/check 
-**Method:** GET
-<br/>
-**Description:**
-Check if a rule exists or no. If the response is "OK", the rule exists, on the other hand an error will be returned.
-<br/>
-**Example:**
-````
-TODO
-````
 
-#### Path: /api/v4/{table}/{chain}
+#### Path: /api/v4/add/{table}/{chain}
 **Method:** POST
 <br/>
 **Description:**
@@ -49,24 +46,26 @@ Include a rule to iptables.
 <br/>
 **Example:**
 ````
-URL: /api/v4/nat/PREROUTING
+URL: /api/v4/add/nat/PREROUTING
 Request Body (JSON):
 {
-	"inInterface": "ether1",
-	"outInterface": "ether2",
 	"protocol": "tcp",
 	"source": "10.1.1.20",
-	"destination": "192.168.10.5",
-	"sourcePorts": "80",
+	"destination": "10.1.1.5",
 	"destinationPorts": "8080",
 	"action": "DNAT",
-	"subparams": "[{ \"name\": \"--to-destination\", \"value\": \"10.5.1.3:8085\"}]"
+	"subparams": [
+        { 
+            "name": "--to-destination", 
+            "value": "10.5.1.3"
+        }
+    ]
 }
 ````
 <br/>
 
 
-#### Path: /api/v4/{table}/{chain}/{position}
+#### Path: /api/v4/add/{table}/{chain}/{position}
 **Method:** POST
 <br/>
 **Description:**
@@ -74,7 +73,7 @@ Include a rule to iptables, but it is possible choose where the rule will be add
 <br/>
 **Example:**
 ````
-URL: /api/v4/filter/INPUT/2
+URL: /api/v4/add/filter/INPUT/2
 Request Body (JSON):
 {
 	"protocol": "udp",
@@ -86,12 +85,48 @@ Request Body (JSON):
 ````
 <br/>
 
-<br/>
 
-**Path:** /api/v4/{table}/{chain}
-<br/>
-**Method:** DELETE
-<br/>
-**Request Parameters:**
+#### Path: /api/v4/check/{table}/{chain} 
+**Method:** POST
 <br/>
 **Description:**
+Check if a rule exists or no. If the response is "OK", the rule exists, on the other hand an error will be returned.
+<br/>
+**Example:**
+````
+URL: /api/v4/check/nat/PREROUTING
+Request Body (JSON):
+{
+	"protocol": "tcp",
+	"source": "10.1.1.20",
+	"destination": "10.1.1.5",
+	"destinationPorts": "8080",
+	"action": "DNAT",
+	"subparams": [
+        { 
+            "name": "--to-destination", 
+            "value": "10.5.1.3"
+        }
+    ]
+}
+````
+
+
+#### Path: /api/v4/delete/{table}/{chain}
+**Method:** POST
+<br/>
+**Description:**
+Remove a rule from iptables.
+<br/>
+**Example:**
+````
+URL: /api/v4/delete/filter/INPUT/2
+Request Body (JSON):
+{
+	"protocol": "udp",
+	"source": "10.1.1.30",
+	"destination": "10.1.1.7",
+	"destinationPorts": "5562,6255",
+	"action": "ACCEPT"
+}
+````
