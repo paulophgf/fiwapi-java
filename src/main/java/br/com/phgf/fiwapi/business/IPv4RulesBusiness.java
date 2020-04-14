@@ -37,17 +37,23 @@ public class IPv4RulesBusiness {
         createCommand(command, param);
     }
 
-    public void checkRule(EnumTable table, String chain, ParamDTO param) {
-        ArrayList<String> command = new ArrayList<>();
-        command.add("iptables");
+    public boolean checkRule(EnumTable table, String chain, ParamDTO param) {
+        boolean result = true;
+        try {
+            ArrayList<String> command = new ArrayList<>();
+            command.add("iptables");
 
-        command.add("-t");
-        command.add(table.getValue());
+            command.add("-t");
+            command.add(table.getValue());
 
-        command.add("--check");
-        command.add(chain);
+            command.add("--check");
+            command.add(chain);
 
-        createCommand(command, param);
+            createCommand(command, param);
+        } catch (FiwapiException e) {
+            result = false;
+        }
+        return result;
     }
 
     public void deleteRule(EnumTable table, String chain, ParamDTO param) {
@@ -123,7 +129,7 @@ public class IPv4RulesBusiness {
 
         String response = osBusiness.sendCommand(5, commandArray);
         if(!"OK".equals(response)) {
-            throw new FiwapiException(response);
+            throw new FiwapiException("Iptables returns: " + response);
         }
     }
 

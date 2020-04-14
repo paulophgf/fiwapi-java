@@ -14,7 +14,7 @@ import java.util.Base64;
 @SpringBootApplication
 public class App {
 
-    public static final Version VERSION = new Version("1.0.0");
+    public static final Version VERSION = new Version("1.0.1");
     public static String authorization;
 
 

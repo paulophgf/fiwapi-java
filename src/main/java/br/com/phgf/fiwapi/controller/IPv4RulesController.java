@@ -15,13 +15,11 @@ public class IPv4RulesController {
     private IPv4RulesBusiness iPv4RulesBusiness;
 
 
-
     @ResponseBody
     @RequestMapping(value = "/check/{table}/{chain}", method = RequestMethod.POST)
-    public String check(@PathVariable("table") String tableName, @PathVariable("chain") String chain, @RequestBody ParamDTO param) {
+    public Boolean check(@PathVariable("table") String tableName, @PathVariable("chain") String chain, @RequestBody ParamDTO param) {
         EnumTable table = EnumTable.get(tableName);
-        iPv4RulesBusiness.checkRule(table, chain, param);
-        return "OK";
+        return iPv4RulesBusiness.checkRule(table, chain, param);
     }
 
     @ResponseBody

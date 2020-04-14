@@ -91,7 +91,7 @@ Request Body (JSON):
 **Method:** POST
 <br/>
 **Description:**
-Check if a rule exists or no. If the response is "OK", the rule exists, on the other hand an error will be returned.
+Check if a rule exists or no. If the response is TRUE, the rule exists.
 <br/>
 **Example:**
 ````
